@@ -17,14 +17,19 @@ export default {
       statement: null,
     };
   },
+  methods: {
+    getStatement() {
+      StatementService.getStatement(this.id)
+        .then((response) => {
+          this.statement = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
   created() {
-    StatementService.getStatement(this.id)
-      .then((response) => {
-        this.statement = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getStatement();
   },
 };
 </script>

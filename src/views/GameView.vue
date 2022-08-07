@@ -1,10 +1,14 @@
 <template>
+  <button @click="reset()">Reset</button>
+
   <div class="statements">
     <StatementCard
       v-for="statement in statements"
       :key="statement.id"
       :statement="statement"
     />
+    <button @left="guess(statemend.id, true)">Truth</button>
+    <button @left="guess(statemend.id, false)">False</button>
   </div>
 </template>
 
@@ -24,9 +28,10 @@ export default {
         .then((response) => (this.statements = response.data))
         .catch((error) => console.log(error));
     },
-    guess2TruthsAndaLie() {},
-    resetAllStatements() {
+    submitGuess() {},
+    reset() {
       StatementService.resetAllStatements();
+      this.get2TruthsAndaLie();
     },
   },
   data() {

@@ -15,6 +15,7 @@ export default {
   props: {
     statement: {
       type: Object,
+      required: true,
     },
   },
 };

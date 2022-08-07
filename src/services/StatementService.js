@@ -20,13 +20,11 @@ export default {
   },
   async get2TruthsAndaLie() {
     this.response = await apiClient.get("/game");
-    for (let data of this.response.data) {
-      this.setStatementUsed(data.id);
-    }
+    this.setStatementsUsed(this.response.data[0].id, this.response.data[1].id, this.response.data[2].id);
     return this.response;
   },
-  async setStatementUsed(id) {
-    this.response = await apiClient.put("/game/" + id);
+  async setStatementsUsed(id1, id2, id3) {
+    this.response = await apiClient.put("/game/" + id1 + "-" + id2 + "-" + id3);
     return this.response;
   },
   async resetAllStatements() {
