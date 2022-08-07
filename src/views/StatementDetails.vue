@@ -1,7 +1,7 @@
 <template>
   <div class="statements">
     <div class="statement-details" v-if="statement">
-      <h1>{{ statement.description }}</h1>
+      <p class="description">{{ statement.description }}</p>
       <p class="true-or-false">{{ statement.truth }}</p>
       <p class="description">{{ statement.backstory }}</p>
     </div>
@@ -39,18 +39,20 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 20px;
+  height: 400px;
 }
 .statement-details {
   padding: 20px;
-  width: 500px;
-  height: 500px;
+
   cursor: pointer;
   border: 1px solid #39495c;
   margin-bottom: 18px;
+  font-size: 20px;
 }
 .true-or-false {
   display: block;
-  font-size: 36px;
+  font-size: 20px;
   font-weight: bold;
 }
 .description {

@@ -1,16 +1,11 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import GameView from "../views/GameView.vue";
 import AboutView from "../views/AboutView.vue";
-import StatementList from "../views/StatementList.vue";
 import StatementDetails from "../views/StatementDetails.vue";
 
 const history = createWebHashHistory();
 const routes = [
-  {
-    path: "/",
-    name: "StatementList",
-    component: StatementList,
-  },
+
   {
     path: "/statements/:id",
     name: "StatementDetails",
@@ -23,7 +18,7 @@ const routes = [
     component: GameView,
   },
   {
-    path: "/about",
+    path: "/",
     name: "About",
     component: AboutView,
     // route level code-splitting
