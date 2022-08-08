@@ -1,29 +1,44 @@
 <template>
-  <div class="statements">
-    <StatementCard
-      v-for="(statement, index) in statements"
-      :key="statement.id"
-      :statement="statement"
-      :cardIndex="index"
-      :guess="getGuess"
-    />
-  </div>
-  <div>{{ score }}</div>
-  <div class="buttons">
-    <q-btn
-      v-if="statements.length === 0"
-      color="white"
-      text-color="black"
-      @click="resetAllStatements()"
-      label="Reset"
-    ></q-btn>
-    <q-btn
-      v-else
-      color="white"
-      text-color="black"
-      @click="submitGuesses()"
-      label="Submit"
-    ></q-btn>
+  <div id="q-app" style="min-height: 10vh">
+    <div class="statement-card-row">
+      <div class="statement-card">
+        <StatementCard
+          v-for="(statement, index) in statements"
+          :key="statement.id"
+          :statement="statement"
+          :cardIndex="index"
+          :guess="getGuess"
+        />
+      </div>
+      <q-card class="scoreboard-card">
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h6">Score: {{ score }}</div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn
+            v-if="statements.length === 0"
+            color="white"
+            text-color="black"
+            @click="resetAllStatements()"
+            label="Reset"
+          ></q-btn>
+          <q-btn
+            v-else
+            color="white"
+            text-color="black"
+            @click="submitGuesses()"
+            label="Submit"
+          ></q-btn>
+          <q-btn
+            v-if="this.submitted"
+            color="white"
+            text-color="black"
+            @click="getNextSet()"
+            label="Next"
+          ></q-btn>
+        </q-card-actions>
+      </q-card>
+    </div>
   </div>
 </template>
 
@@ -58,12 +73,20 @@ export default {
       if (this.checkGuesses()) {
         for (var i = 0; i < this.statements.length; i++) {
           if (this.statements[i].truth != this.guesses[i]) {
-            this.score--;
+            if (!this.submitted) {
+              this.score--;
+              this.submitted = true;
+            }
             return;
           }
         }
-        this.score++;
+        if (!this.submitted) this.score++;
+        this.submitted = true;
       }
+    },
+    getNextSet() {
+      this.submitted = false;
+      this.get2TruthsAndaLie();
     },
 
     resetAllStatements() {
@@ -90,10 +113,7 @@ export default {
       statements: [],
       guesses: [],
       score: 0,
-      submitted: {
-        type: Boolean,
-        default: false,
-      },
+      submitted: false,
     };
   },
   created() {
@@ -103,18 +123,29 @@ export default {
 </script>
 
 <style scoped>
-.statements {
+.statement-card-row {
+  display: block;
+}
+.statement-card {
   margin: auto;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   width: max-content;
+}
+
+.scoreboard-card {
+  margin: auto;
+  display: flex;
 }
 
 .buttons {
   margin: auto;
   padding-top: 100px;
   width: 320px;
+}
+
+.scoreboard-card {
+  width: 320px;
+  display: block;
 }
 </style>
