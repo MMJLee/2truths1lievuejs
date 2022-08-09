@@ -1,3 +1,21 @@
+<script>
+export default {
+  props: {
+    statement: {
+      type: Object,
+      required: true,
+    },
+    cardIndex: Number,
+    guess: Function,
+  },
+  data() {
+    return {
+      pressed: undefined,
+    };
+  },
+};
+</script>
+
 <template>
   <div id="q-app" style="min-height: 10vh">
     <div class="q-pa-md row items-start q-gutter-md">
@@ -11,17 +29,20 @@
         </q-card-section>
         <q-card-actions class="button-container" align="around">
           <q-btn
-            class="truth-lie-button"
-            color="white"
+            :class="[this.pressed ? 'btn-pressed' : 'not-pressed']"
             text-color="black"
-            @click="guess(true, cardIndex)"
+            @click="
+              guess(true, cardIndex);
+              this.pressed = true;
+            "
             label="Truth"
           ></q-btn>
           <q-btn
-            class="truth-lie-button"
-            color="white"
-            text-color="black"
-            @click="guess(false, cardIndex)"
+            :class="[!this.pressed ? 'btn-pressed' : 'not-pressed']"
+            @click="
+              guess(false, cardIndex);
+              this.pressed = false;
+            "
             label="Lie"
           ></q-btn>
         </q-card-actions>
@@ -30,18 +51,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    statement: {
-      type: Object,
-      required: true,
-    },
-    cardIndex: Number,
-    guess: Function,
-  },
-};
-</script>
+
 
 <style scoped>
 .statement-card {
@@ -58,7 +68,14 @@ export default {
 .button-container {
   padding-top: 16px;
 }
-.truth-lie-button {
+.btn-pressed {
+  background-color: rgb(218, 218, 218);
+  font-size: 20px;
+  margin: 0px;
+  padding: 0px;
+  width: 120px;
+}
+.not-pressed {
   font-size: 20px;
   margin: 0px;
   padding: 0px;

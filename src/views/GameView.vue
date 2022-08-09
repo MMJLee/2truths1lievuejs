@@ -61,11 +61,22 @@ export default {
     },
     //checks if guesses have been made for each of the 3 statements
     checkGuesses() {
+      const counts = [0, 0];
+      if (this.statements.length < 3) {
+        alert("Thank you for playing, your final score is " + this.score + ".");
+        return false;
+      }
+
       for (var i = 0; i < this.statements.length; i++) {
         if (this.guesses[i] === undefined) {
           alert("Please select truth or lie for all 3 statements");
           return false;
-        }
+        } else if (this.guesses[i]) counts[0]++;
+        else counts[1]++;
+      }
+      if (counts[0] != counts[1] + counts[1]) {
+        alert("Please select 2 truths and 1 lie");
+        return false;
       }
       return true;
     },
