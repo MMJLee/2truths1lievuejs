@@ -82,13 +82,18 @@ export default {
     },
     submitGuesses() {
       if (this.checkGuesses()) {
+        StatementService.submitGuesses(
+          this.statements[0].id,
+          this.statements[1].id,
+          this.statements[2].id
+        );
         for (var i = 0; i < this.statements.length; i++) {
           if (this.statements[i].truth != this.guesses[i]) {
             if (!this.submitted) {
               this.score--;
               this.submitted = true;
             }
-            return;
+            break;
           }
         }
         if (!this.submitted) this.score++;
@@ -100,8 +105,8 @@ export default {
       this.get2TruthsAndaLie();
     },
 
-    resetAllStatements() {
-      StatementService.resetAllStatements();
+    async resetAllStatements() {
+      await StatementService.resetAllStatements();
       this.get2TruthsAndaLie();
     },
     getGuess(guess, index) {
@@ -122,7 +127,7 @@ export default {
   data() {
     return {
       statements: [],
-      guesses: [],
+      guesses: [], //boolean array of size 3, 0 for left card, 1 for middle card, 2 for right card
       score: 0,
       submitted: false,
     };
