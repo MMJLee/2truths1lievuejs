@@ -1,6 +1,6 @@
 # 2truths1lievuejs
 
-This is my first full-stack project. I built this because I wanted to showcase myself as a person through interesting and odd truths (and lies). It is currently a work in progress and more features will be added. 
+This is my first full-stack project. I built this because I wanted to showcase myself as a person through interesting and odd truths (and lies). I built API's on Java with Spring framework and hosted the database and backend on AWS Elastic Beanstalk. I used AWS Route53 to route the elastic beanstalk api accesspoint to a subdomain (api.mjlee.dev) to use HTTPS as elastic beanstalk does not support it natively. I hosted my frontend on Github Pages and routed that to mjlee.dev. It is currently a work in progress and more features will be added. Thank you for reading.
 
 ## Getting Started
 
