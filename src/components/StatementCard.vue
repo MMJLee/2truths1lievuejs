@@ -7,10 +7,13 @@ export default {
     },
     cardIndex: Number,
     guess: Function,
+    submitted: Boolean,
   },
   data() {
     return {
-      pressed: undefined,
+      truthPressed: false,
+      liePressed: false,
+      front: true,
     };
   },
 };
@@ -18,36 +21,54 @@ export default {
 
 <template>
   <div id="q-app" style="min-height: 10vh">
-    <div class="q-pa-md row items-start q-gutter-md">
-      <!-- <router-link
+    <!-- <router-link
         class="statement-link"
         :to="{ name: 'StatementDetails', params: { id: statement.id } }"
       ></router-link> -->
-      <q-card class="statement-card">
-        <q-card-section class="bg-primary text-white">
-          <div class="description">{{ statement.description }}</div>
-        </q-card-section>
-        <q-card-actions class="button-container" align="around">
-          <q-btn
-            :class="[this.pressed ? 'btn-pressed' : 'not-pressed']"
-            text-color="black"
-            @click="
-              guess(true, cardIndex);
-              this.pressed = true;
-            "
-            label="Truth"
-          ></q-btn>
-          <q-btn
-            :class="[!this.pressed ? 'btn-pressed' : 'not-pressed']"
-            @click="
-              guess(false, cardIndex);
-              this.pressed = false;
-            "
-            label="Lie"
-          ></q-btn>
-        </q-card-actions>
-      </q-card>
-    </div>
+    <q-card v-if="front" class="statement-card">
+      <q-card-section class="bg-primary text-secondary">
+        <div class="description">{{ statement.description }}</div>
+      </q-card-section>
+      <q-card-actions
+        v-if="!submitted"
+        class="button-container bg-secondary"
+        align="around"
+      >
+        <q-btn
+          :class="[this.truthPressed ? 'btn-pressed' : 'not-pressed']"
+          @click="
+            guess(true, cardIndex);
+            this.truthPressed = true;
+            this.liePressed = false;
+          "
+          label="Truth"
+        ></q-btn>
+        <q-btn
+          :class="[this.liePressed ? 'btn-pressed' : 'not-pressed']"
+          @click="
+            guess(false, cardIndex);
+            this.liePressed = true;
+            this.truthPressed = false;
+          "
+          label="Lie"
+        ></q-btn>
+      </q-card-actions>
+      <q-card-actions
+        v-else
+        class="button-container bg-secondary"
+        align="around"
+      >
+        <q-btn class="not-pressed" @click="front = !front">{{
+          statement.truth
+        }}</q-btn>
+      </q-card-actions>
+    </q-card>
+
+    <q-card v-else class="statement-card-backstory">
+      <q-card-section class="bg-primary text-secondary">
+        <div class="backstory">{{ statement.backstory }}</div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -56,29 +77,29 @@ export default {
 <style scoped>
 .statement-card {
   width: 320px;
-  height: 200px;
+  margin-bottom: 155px;
 }
-
+.statement-card-backstory {
+  width: 320px;
+}
 .description {
-  font-size: 20px;
-  margin: 0px;
-  padding: 0px;
   height: 80px;
+}
+.backstory {
+  height: 300px;
 }
 .button-container {
   padding-top: 16px;
+  padding-bottom: 16px;
 }
 .btn-pressed {
-  background-color: rgb(218, 218, 218);
-  font-size: 20px;
-  margin: 0px;
-  padding: 0px;
+  background-color: rgb(175, 175, 175);
   width: 120px;
 }
 .not-pressed {
-  font-size: 20px;
-  margin: 0px;
-  padding: 0px;
   width: 120px;
+}
+* {
+  font-size: 20px;
 }
 </style>

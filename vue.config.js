@@ -1,12 +1,10 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  publicPath: ".",
+
   transpileDependencies: [
     'quasar'
   ],
-
-  publicPath: process.env.NODE_ENV === "production"
-    ? "/2truths1lievuejs"
-    : "/",
 
   pluginOptions: {
     quasar: {

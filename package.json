@@ -2,11 +2,10 @@
   "name": "2truths1lievuejs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mjlee.dev",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && cd dist && copy index.html 404.html && echo 'mjlee.dev' > CNAME && cd .. && gh-pages -d dist"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
