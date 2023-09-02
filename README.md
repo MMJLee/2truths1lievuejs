@@ -4,7 +4,7 @@ This is my first full-stack project. I built this because I wanted to showcase m
 
 ## Getting Started
 
-You can play the game [here](https://mjlee.dev)
+You can play the game ~~[here](https://mjlee.dev)~~
 
 ## Built With
 
